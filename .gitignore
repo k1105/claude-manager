@@ -1,0 +1,14 @@
+# Secrets
+.env
+*.token
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Obsidian
+.obsidian/
+
+# Temporary
+*.tmp
+*.bak
