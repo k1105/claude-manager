@@ -1,94 +1,118 @@
 ---
 name: setup
-description: 初回セットアップ。ユーザー情報の収集、プロフィール生成、Discord連携の設定を対話形式で行う。
+description: 初回セットアップ（Phase 1）。環境チェック・Bot作成・トークン設定まで。セッション再起動後は /setup-discord が自動で引き継ぐ。
 user-invocable: true
 ---
 
-# 初回セットアップ
+# 初回セットアップ（Phase 1: ターミナル）
 
-このシステムを初めて使うときに実行する。対話形式でユーザー情報を収集し、システムを使える状態にする。
+このシステムを初めて使うときに実行する。
+**このスキルはターミナル上で完結する。** Discord上での対話確立は Phase 2（`/setup-discord`）で行う。
+
+## 全体の流れ（3フェーズ）
+
+1. **Phase 1（このスキル `/setup`）** — ターミナルで実施
+   - 環境チェック（bun、Discordプラグイン）
+   - 挨拶・名前の取得
+   - Bot作成・トークン設定
+   - → セッション再起動を案内
+2. **Phase 2（`/setup-discord`）** — 再起動後、自動実行
+   - DMペアリング
+   - 「一般」チャンネルでの対話開始
+   - プロフィール収集（Discord上で）
+3. **Phase 3（`/setup-channels`）** — Discord上で実施
+   - 用途別チャンネルの作成・ID登録
 
 ## フロー
 
-### 1. 挨拶と説明
+### 1. 環境チェック（自動・無言で）
+
+ユーザーに声をかける前に、以下を確認する：
+
+1. **bunがインストールされているか**
+   - `which bun` を実行
+   - なければユーザーに伝える：「Discordプラグインの動作にbunが必要です。インストールしてよいですか？」
+   - 許可を得たら `curl -fsSL https://bun.sh/install | bash` を実行
+2. **Discordプラグインがインストールされているか**
+   - `/mcp` でプラグイン一覧を確認
+   - `plugin:discord:discord` がなければ：「Discordプラグインをインストールします」と伝え、`/plugin install discord@claude-plugins-official` を案内
+
+環境が整ったらステップ2へ。
+
+### 2. 挨拶と説明（短く）
 
 ```
 はじめまして。あなた専用のAIマネージャーです。
 
-このシステムは：
-- 毎朝のブリーフィングでタスクを整理する
-- 日中のチェックインで進捗を確認する
-- 打ち合わせ後のTODO回収を手伝う
-- 離脱しそうなとき（オプション）にアラートを出す
-- リサーチや情報収集を自律的に行う
+- 毎朝のブリーフィングでタスクを整理
+- 日中のチェックインで進捗確認
+- 打ち合わせ後のTODO回収
+- リサーチや情報収集の自律実行
 
-まずはあなたのことを教えてください。
+まずDiscordで話せるようにします。お名前を教えてください（ニックネームでOK）。
 ```
 
-### 2. ユーザー情報の収集
+名前を受け取ったら `docs/profile.md` の名前だけ埋めて、すぐステップ3へ。
 
-以下を1つずつ聞く（一度に全部聞かない）：
+### 3. Bot作成・トークン設定
 
-1. **名前**（ニックネームでもOK）
-2. **職業・役割**（何をしている人か）
-3. **主なスキル・専門分野**
-4. **ADHD特性について**（診断の有無、自覚している傾向）
-   - 集中できるとき・できないとき
-   - 着手のトリガー（何があると動けるか）
-   - 苦手なパターン（先延ばし、切り替え困難、等）
-5. **使っているツール**（スケジュール管理、メモ、開発環境）
-6. **興味・関心のあるジャンル**（ニュース共有やリサーチの方向付けに使う）
-7. **目標やプロジェクト**（今抱えていること）
-
-### 3. プロフィール生成
-
-収集した情報を `docs/profile.md` に書き込む。ユーザーに確認してもらう。
-
-### 4. Discord連携の設定
+一度に全手順を提示する（ステップごとに分割して待たない）：
 
 ```
-次にDiscordの設定をします。以下の手順で進めてください：
+以下の手順でDiscord botを作成してください：
 
-1. Discord Developer Portal（https://discord.com/developers/applications）を開く
-2. 「New Application」でアプリケーションを作成
-3. 「Bot」セクションで：
-   - 「Add Bot」をクリック
-   - 「MESSAGE CONTENT INTENT」をONにする
-   - トークンをコピー
-4. 「OAuth2 → URL Generator」で：
+1. Discordでサーバーを新規作成（既存サーバーでもOK）
+2. Discord Developer Portal（https://discord.com/developers/applications）を開く
+3. 「New Application」→ 名前をつけて作成
+4. 左メニュー「Bot」→ 以下を設定：
+   - 「Privileged Gateway Intents」で MESSAGE CONTENT INTENT、SERVER MEMBERS INTENT、PRESENCE INTENT を全てON
+   - 「Reset Token」でトークンをコピー（一度しか表示されません）
+5. 左メニュー「OAuth2」→「URL Generator」：
    - Scopesで「bot」を選択
-   - Bot Permissionsで「Send Messages」「Read Message History」「Add Reactions」「Attach Files」を選択
-   - 生成されたURLでbotをサーバーに招待
-5. サーバーで以下のチャンネルを作成：
-   - #daily-briefing — 毎朝のタスク整理
-   - #lab — システム改善のディスカッション
-   - #alert — 離脱アラート
-   - #task-report — タスク完了報告
-   - #off-topic — 雑談・ニュース共有
-   - #scheduler — 自動実行用（botのみアクセス推奨）
-6. 各チャンネルのIDをコピー（右クリック → IDをコピー、開発者モードONが必要）
+   - Bot Permissionsで以下を選択：
+     - View Channels
+     - Send Messages
+     - Send Messages in Threads
+     - Read Message History
+     - Attach Files
+     - Add Reactions
+   - 生成されたURLをブラウザで開き、サーバーに招待
+
+全部できたらトークンを貼ってください。
 ```
 
-ユーザーからチャンネルIDを受け取ったら `config/channels.json` に書き込む。
-botトークンは `/discord:configure` スキルで設定する。
+### 4. トークン保存
 
-### 5. 初期ファイルの作成
+トークンを受け取ったら `/discord:configure <token>` スキルで設定する。
 
-- `plans/goals.md` にユーザーの目標・プロジェクトを記載
-- `research/_questions.md` に関心のあるテーマをRQとして記載（あれば）
-- `projects/_principles.md` は空テンプレートのまま（経験を積んで育てる）
-
-### 6. 初回ブリーフィング
+### 5. セッション再起動の案内
 
 ```
-セットアップ完了です。早速、最初のブリーフィングをやりましょう。
-今日のスケジュールを教えてください（カレンダーのスクリーンショットでもOKです）。
+トークンを保存しました。
+
+Discordで対話するために、セッションを再起動する必要があります。
+以下のコマンドで起動し直してください：
+
+claude --channels plugin:discord@claude-plugins-official
+
+起動したら、DiscordでbotにDMを送ってください。
+ペアリングコードが返ってきたら、セットアップの続きが自動で始まります。
 ```
 
-→ `/briefing` スキルに引き継ぐ
+**ここでPhase 1は終了。**
+Phase 2は再起動後のセッションで自動的に引き継がれる（`.claude/rules/setup-detect.md` がセットアップ未完了を検知し、`/setup-discord` を実行する）。
+
+## トラブルシュート
+
+### MCPサーバーがfailedになる場合
+
+1. **Intentsの確認**: Developer Portal → Bot → Privileged Gateway Intentsで3つ全てONか
+2. **トークンの確認**: Developer Portal → Bot → Reset Tokenで再生成
+3. **起動フラグの確認**: `claude --channels plugin:discord@claude-plugins-official` で起動しているか
+4. **エラーの確認**: `--debug` フラグをつけて起動し、discord関連のエラーを確認
 
 ## 注意
 
-- 一度に全部聞かない。1つずつ、会話のペースで
-- 「わからない」「あとで決める」はOK。空欄のまま進む
-- セットアップ後も、使いながら `docs/profile.md` は随時更新される
+- 環境チェックは先に、静かに行う。ユーザーの手を煩わせない
+- Bot権限に「Manage Channels」は不要（botはチャンネルを作成できない）
+- このフェーズではプロフィールを詳しく聞かない。名前だけ
