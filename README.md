@@ -2,6 +2,25 @@
 
 Claude Code上で動作する、対話を通じて自己改善していく専属AIマネージャーシステムです。
 
+## クイックスタート
+
+```bash
+# 1. リポジトリをクローン
+git clone https://github.com/YOUR_USERNAME/claude-manager.git
+cd claude-manager
+
+# 2. Claude Codeを起動
+claude
+
+# 3. セットアップを開始
+# Claude Codeの中で、次のように話しかけてください：
+セットアップを始めたい
+# または
+/setup
+```
+
+セットアップスキルが対話形式であなたの情報を収集し、Discord連携の設定をガイドします。
+
 ## 何ができるか
 
 - **デイリーブリーフィング** -- 毎朝、今日のタスクと優先順位を一緒に決める
@@ -27,25 +46,6 @@ Claude Code上で動作する、対話を通じて自己改善していく専属
 - Discordアカウントとサーバー（bot連携用）
 - GCP VM等の常時稼働環境（推奨）
 
-## セットアップ
-
-```bash
-# 1. リポジトリをクローン
-git clone https://github.com/YOUR_USERNAME/claude-manager.git
-cd claude-manager
-
-# 2. Claude Codeを起動
-claude
-
-# 3. セットアップを開始
-# Claude Codeの中で以下を入力：
-セットアップを始めたい
-# または
-/setup
-```
-
-セットアップスキルが対話形式であなたの情報を収集し、Discord連携の設定をガイドします。
-
 ## ファイル構造
 
 ```
@@ -70,23 +70,23 @@ claude-manager/
 
 ## スキル一覧
 
-| スキル | 説明 | 手動呼び出し |
-|---|---|---|
-| `/setup` | 初回セットアップ | OK |
-| `/briefing` | デイリーブリーフィング | OK |
-| `/checkin` | タスク進捗チェックイン | OK |
-| `/end-of-day` | 1日のサマリー・引き継ぎ | OK |
-| `/meeting-debrief` | 打ち合わせ後のTODO回収 | OK |
-| `/project-create` | プロジェクトファイル作成 | OK |
-| `/project-review` | プロジェクトレビュー | OK |
-| `/research-note` | リサーチノート作成 | OK |
-| `/criteria-workshop` | クライテリア・ワークショップ | OK |
-| `/desk-research` | 自律デスクリサーチ | OK |
-| `screen-log-check` | 離脱チェック（自動） | - |
-| `health-check` | screen monitor監視（自動） | - |
-| `self-action-check` | Claude自身のTODOチェック（自動） | - |
-| `news-share` | ニュース共有（自動） | - |
-| `cross-pollination` | 異業種インスピレーション（自動） | - |
+| スキル               | 説明                             | 手動呼び出し |
+| -------------------- | -------------------------------- | ------------ |
+| `/setup`             | 初回セットアップ                 | OK           |
+| `/briefing`          | デイリーブリーフィング           | OK           |
+| `/checkin`           | タスク進捗チェックイン           | OK           |
+| `/end-of-day`        | 1日のサマリー・引き継ぎ          | OK           |
+| `/meeting-debrief`   | 打ち合わせ後のTODO回収           | OK           |
+| `/project-create`    | プロジェクトファイル作成         | OK           |
+| `/project-review`    | プロジェクトレビュー             | OK           |
+| `/research-note`     | リサーチノート作成               | OK           |
+| `/criteria-workshop` | クライテリア・ワークショップ     | OK           |
+| `/desk-research`     | 自律デスクリサーチ               | OK           |
+| `screen-log-check`   | 離脱チェック（自動）             | -            |
+| `health-check`       | screen monitor監視（自動）       | -            |
+| `self-action-check`  | Claude自身のTODOチェック（自動） | -            |
+| `news-share`         | ニュース共有（自動）             | -            |
+| `cross-pollination`  | 異業種インスピレーション（自動） | -            |
 
 ## 定期実行（オプション）
 
