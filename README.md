@@ -19,7 +19,7 @@ claude
 /setup
 ```
 
-セットアップスキルが対話形式であなたの情報を収集し、Discord連携の設定をガイドします。
+セットアップスキルが環境チェック（bun・Discordプラグイン）、Bot作成、プロフィール収集を対話形式でガイドします。
 
 ## 何ができるか
 
@@ -43,6 +43,7 @@ claude
 ## 必要なもの
 
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
+- [bun](https://bun.sh/) — Discordプラグインの動作に必要
 - Discordアカウントとサーバー（bot連携用）
 - GCP VM等の常時稼働環境（推奨）
 
@@ -88,11 +89,25 @@ claude-manager/
 | `news-share`         | ニュース共有（自動）             | -            |
 | `cross-pollination`  | 異業種インスピレーション（自動） | -            |
 
-## 定期実行（オプション）
+## 定期実行
 
-定期実行には外部スケジューラー（`scripts/scheduler.py`）が必要です。cronスケジュールに従ってDiscordのschedulerチャンネルにcueを投稿し、Claude Codeが反応して処理します。
+定期実行には2つの方式があります：
 
-スケジューラーのセットアップは別途ドキュメントを参照してください。
+### 方式A: セッション内CronCreate + タイムテーブル（ローカル推奨）
+
+外部プロセスなしで動作。セッション起動時に `CronCreate` で10分間隔のcronを1つ登録し、`config/cron_jobs.json` に基づいてタスクを実行します。
+
+- **メリット**: 追加セットアップ不要
+- **制約**: セッション再起動時にcronの再登録が必要。7日で自動期限切れ。PCスリープ中は停止
+
+### 方式B: 外部スケジューラー + 別botアカウント（常時稼働推奨）
+
+`scripts/scheduler.py` が別のDiscord botアカウントでschedulerチャンネルにcueを投稿し、Claude Codeが反応して処理します。
+
+- **メリット**: セッション再起動に依存しない
+- **制約**: **Claude Codeのbot自身が投稿したメッセージやwebhookメッセージはDiscordプラグインに配信されない**ため、スケジューラー用に別のbotアカウントが必要
+
+詳細は `docs/system.md` を参照してください。
 
 ## Obsidian連携
 

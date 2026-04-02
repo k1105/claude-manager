@@ -90,19 +90,34 @@ docs/
 | off-topic | 雑談・ニュース共有 |
 | scheduler | 外部スケジューラーからの定期実行指示 |
 
-## 定期実行（外部スケジューラー）
+## 定期実行
 
-定期実行は外部プロセス `scripts/scheduler.py` が担当する。
+定期実行には2つの方式がある。環境に応じて選択する。
+
+### 方式A: セッション内CronCreate + タイムテーブル（ローカル推奨）
+
+- `CronCreate` で `*/10 * * * *` の単一cronをセッション起動時に登録
+- 10分ごとに `config/cron_jobs.json` を参照し、該当するジョブを実行
+- **制約:**
+  - セッション再起動時にcronの再登録が必要
+  - 7日で自動期限切れ（recurring jobs）
+  - PCスリープ中はcronが停止。復帰後、30分以上過ぎたタスクはスキップ
+  - ただし `daily-briefing` 等スキップ不可のジョブは時間に関係なく実行する
+
+### 方式B: 外部スケジューラー + 別botアカウント（常時稼働推奨）
+
+- 外部プロセス `scripts/scheduler.py` が**別のDiscord botアカウント**でschedulerチャンネルにcue（`📋 {job_name}`）を投稿
+- Claude Code側が反応して処理し、完了後に ✅ リアクション
+- 5分以内に ✅ がなければ最大3回まで再送
+- **重要: Discordプラグインはwebhook由来のメッセージとbot自身のメッセージをinboundイベントとして配信しない。スケジューラーにはClaude Codeとは別のbotアカウントが必要**
+
+### 共通
 
 - ジョブ定義: `config/cron_jobs.json`
-- 仕組み: cronスケジュールに従い、schedulerチャンネルに短いcue（`📋 {job_name}`）だけを投稿する
 - Claude側の処理:
-  1. schedulerチャンネルから `📋 {job_name}` を受け取る
+  1. cueまたはcronトリガーを受け取る
   2. `config/cron_jobs.json` でジョブ名に対応する `skill` フィールドを確認
   3. `.claude/skills/{skill}/SKILL.md` を読んで手順に従い実行
-  4. 完了後にそのメッセージに ✅ リアクションをつける
-- 再送: Claudeが5分以内に ✅ をつけなければ、スケジューラーが最大3回まで再送する
-- セッション内のCronCreateは使わない。すべて外部スケジューラー経由で実行する
 
 ## 打ち合わせトリガー（daily_triggers.json）
 
