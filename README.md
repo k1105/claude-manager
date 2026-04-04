@@ -104,8 +104,6 @@ claude-manager/
 | `/autonomous-prep`   | デッドライン駆動の自律準備       | OK           |
 | `/session-start`     | セッション開始セルフチェック     | OK           |
 | `/weekly-review`     | 週次レビュー                     | OK           |
-| `screen-log-check`   | 離脱チェック（手動）             | -            |
-| `health-check`       | screen monitor監視（自動）       | -            |
 | `self-action-check`  | Claude自身のTODOチェック（自動） | -            |
 | `news-share`         | ニュース共有（自動）             | -            |
 | `cross-pollination`  | 異業種インスピレーション（自動） | -            |
