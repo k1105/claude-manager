@@ -39,7 +39,7 @@ claude
 - **自律リサーチ** -- 興味のあるテーマを自動的に調べてドキュメントに蓄積する
 - **ニュース共有** -- 興味に合ったニュースを1日3回共有する
 - **プロジェクト管理** -- プロジェクトファイルの作成・レビュー・更新を支援する
-- **クライテリア・ワークショップ** -- 9つの問いで企画を構造的に整理する
+- **ゴール駆動ディスカッション** -- status.mdのゴールとギャップに照らして議論する
 
 ## コミュニケーション設計
 
@@ -84,7 +84,7 @@ claude-manager/
     [project-name]/      # プロジェクト単位（status.md, research/, drafts/, topics/)
   docs/
     principles.md        # 指針・学び
-    criteria_archive.md  # クライテリアワークショップのメタ知見
+    criteria_archive.md  # プロジェクト評価基準のメタ知見
 ```
 
 ## スキル一覧
@@ -99,7 +99,6 @@ claude-manager/
 | `/project-create`    | プロジェクトファイル作成         | OK           |
 | `/project-review`    | プロジェクトレビュー             | OK           |
 | `/research-note`     | リサーチノート作成               | OK           |
-| `/criteria-workshop` | クライテリア・ワークショップ     | OK           |
 | `/desk-research`     | 自律デスクリサーチ               | OK           |
 | `/project-scan`      | 全プロジェクト横断スキャン       | OK           |
 | `/autonomous-prep`   | デッドライン駆動の自律準備       | OK           |
