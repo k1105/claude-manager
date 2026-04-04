@@ -20,27 +20,73 @@
 
 ## ファイル構造
 
+各ディレクトリには明確な役割がある。迷ったらこのルールに従う。
+
+### tasks/ — 日次タスクリスト（消費型）
+毎日のブリーフィングで生成。その日限り。
+
 ```
 tasks/
-  YYYY-MM-DD.md        # 今日のタスクリスト（ブリーフィング完了の証）
-  timetable-YYYY-MM-DD.md  # その日のタイムライン（独立管理）
+  YYYY-MM-DD.md             # その日のタスクリスト（ブリーフィング完了の証）
+```
+
+### projects/ — プロジェクト単位のドキュメント（蓄積型）
+進行中・過去含むプロジェクトの記録。1プロジェクト = 1ディレクトリ。リサーチもプロジェクト配下で管理。
+
+```
 projects/
-  _principles.md       # 指針・学び・経験から得た方針
-  [project-name].md    # プロジェクトごとのドキュメント
-plans/
-  goals.md             # プロジェクト一覧インデックス
-  weekly-YYYY-WNN.md   # 週次レビュー記録
-config/
-  cron_jobs.json       # 定期実行ジョブ定義
-  channels.json        # Discordチャンネル設定
-  daily_triggers.json  # その日の打ち合わせトリガー（ブリーフィング時に生成）
+  deadlines.md               # プロジェクト横断のデッドライン一覧
+  _shared_research/          # 複数プロジェクト横断のリサーチ
+    _questions.md            #   RQインデックス
+    cross-pollination.md     #   異業種クロスポリネーション
+    [topic-name]/            #   横断的リサーチテーマ
+  _archive/                  # 完了したプロジェクト
+  [project-name]/            # プロジェクトディレクトリ
+    README.md                #   概要・定義（変更頻度：低）
+    status.md                #   現在地・TODO・決定事項ログ（変更頻度：高）
+    criteria.md              #   クライテリア（あるもののみ）
+    research/                #   プロジェクト固有のリサーチ
+    drafts/                  #   会議向け叩き台・資料原稿
+    topics/                  #   並行する議題・サブテーマ
+```
+
+### logs/ — 記録・ログ（時系列の事実記録）
+日次ログ、システムログ。すべて「何が起きたか」の記録。
+
+```
 logs/
-  YYYY-MM-DD.md        # 今日の会話・作業ログ
+  daily/
+    YYYY-MM-DD.md            # 日次の会話・作業ログ
+  weekly/
+    weekly-YYYY-WNN.md       # 週次レビュー記録
+  system/
+    *.log                    # システムプロセスログ
   screen/
-    YYYY-MM-DD.json    # スクリーンキャプチャログ（オプション）
+    YYYY-MM-DD.json          # スクリーンキャプチャログ（オプション）
+  action_items.md            # Claudeの自己管理用アクション項目
+```
+
+**配置ルール:** `logs/` に置くもの = 時系列の事実記録。判断や方針は含めない。
+
+### config/ — 設定ファイル
+スケジューラーやシステムの動作設定。
+
+```
+config/
+  cron_jobs.json             # 定期実行ジョブ定義
+  channels.json              # Discordチャンネル設定
+  daily_triggers.json        # その日の打ち合わせトリガー（ブリーフィング時に生成）
+```
+
+### docs/ — システムドキュメント（永続型）
+システムの設計・運用ルール、ユーザープロファイル。
+
+```
 docs/
-  profile.md           # ユーザーについて（性格・特性・コミュニケーション原則）
-  system.md            # このファイル（システム運用ルール）
+  profile.md                 # ユーザーについて（性格・特性・コミュニケーション）
+  system.md                  # このファイル（システム運用ルール）
+  principles.md              # 指針・学び・経験から得た方針（横断的）
+  criteria_archive.md        # クライテリアワークショップのメタ知見（横断的）
 ```
 
 ### タスクのフォーマット
@@ -67,14 +113,15 @@ docs/
 
 - **新しいタスクが出てきたとき** → `tasks/YYYY-MM-DD.md`に即座に追記
 - **タスクが完了したとき** → 該当タスクを`[x]`に更新
-- **重要な決定・気づきが出たとき** → `logs/YYYY-MM-DD.md`に追記
+- **重要な決定・気づきが出たとき** → `logs/daily/YYYY-MM-DD.md`に追記
+- **プロジェクトに関する決定・進捗** → `projects/{name}/status.md`に追記（realtime-record.mdルール参照）
 
 ## スクリーンキャプチャ監視（オプション）
 
 - `scripts/screen_monitor.py` がバックグラウンドで常時動作（別途セットアップが必要）
 - 60秒間隔でスクリーンショットを取得 → AIで画面内容を事実ベースで記述
 - `logs/screen/YYYY-MM-DD.json` に追記（判断・評価なし、事実のみ）
-- **離脱判定はClaude Code側のcronジョブで実施** — screen logとタスクを照合して判断
+- **離脱判定はClaude Code側のcheckinスキルで実施** — screen logとタスクを照合して判断
 - 離脱アラートはDiscordのalertチャンネルに送信
 
 ## Discordチャンネル構成
@@ -156,13 +203,14 @@ docs/
 
 ## リサーチドキュメント
 
-`research/` ディレクトリに、調査・研究・思考の過程を記録する。
+リサーチは全てプロジェクト配下で管理する。
 
-- **トピック単位でファイルを作る**（例：`research/topic-name.md`）
+- **プロジェクト固有のリサーチ** → `projects/{name}/research/`
+- **複数プロジェクト横断のリサーチ** → `projects/_shared_research/`
+- RQインデックス → `projects/_shared_research/_questions.md`
 - 決定事項だけでなく、**中途の問い・ディスカッションの過程・仮説**も記録する
 - 事実（調査結果）と内省（自分の考え・問い）を区別して書く
-- Obsidianのwikilinkで他のファイル（プロジェクト、principles等）と接続する
-- 定期的にアクセスして育てる。完成させるのではなく、継続的に深掘りする
+- 出典（著者/出典, 年, URL）を必ず付ける
 
 ## Obsidian連携
 

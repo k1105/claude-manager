@@ -27,4 +27,4 @@ paths:
 
 - 新しいタスクが出たとき → `tasks/YYYY-MM-DD.md` に即座に追記
 - タスクが完了したとき → `[x]` に更新
-- 重要な決定・気づきが出たとき → `logs/YYYY-MM-DD.md` に追記
+- 重要な決定・気づきが出たとき → `logs/daily/YYYY-MM-DD.md` に追記

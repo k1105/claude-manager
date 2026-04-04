@@ -19,7 +19,7 @@ user-invocable: true
 2. 返答を待つ（1回聞いて終わり。返答がなければ追わない）
 3. 返答があった場合:
    - **TODOがあれば** → `tasks/YYYY-MM-DD.md` に追記
-   - **決定事項があれば** → `logs/YYYY-MM-DD.md` に記録
+   - **決定事項があれば** → `logs/daily/YYYY-MM-DD.md` に記録
    - **関連するプロジェクトファイルを更新する**
 4. 記録完了を伝える
 

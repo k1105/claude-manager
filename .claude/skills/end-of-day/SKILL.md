@@ -10,7 +10,7 @@ user-invocable: true
 
 1. `tasks/YYYY-MM-DD.md` を読み、完了・未完了を確認
 2. `logs/screen/YYYY-MM-DD.json` を読み、今日の作業内容を集計
-3. `logs/YYYY-MM-DD.md` に今日のサマリーを追記：
+3. `logs/daily/YYYY-MM-DD.md` に今日のサマリーを追記：
    - 完了したタスク
    - 未完了タスク（理由があれば）
    - 今日の気づき・決定事項

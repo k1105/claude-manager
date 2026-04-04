@@ -1,5 +1,4 @@
 [
-  { "name": "screen-log-check", "cron": "*/10 0-14,23 * * *", "skill": "screen-log-check" },
   { "name": "health-check", "cron": "*/30 0-14,23 * * *", "skill": "health-check" },
   { "name": "daily-briefing", "cron": "28 23 * * 1-6", "skill": "briefing" },
   { "name": "weekly-review", "cron": "28 23 * * 0", "skill": "weekly-review" },
@@ -12,5 +11,6 @@
   { "name": "self-action-check", "cron": "3 * * * *", "skill": "self-action-check" },
   { "name": "checkin", "cron": "0 1,3,5,7,9,11,13 * * 1-6", "skill": "checkin" },
   { "name": "evening-planning", "cron": "30 8 * * 1-6", "skill": "checkin" },
-  { "name": "desk-research", "cron": "30 * * * *", "skill": "desk-research" }
+  { "name": "desk-research", "cron": "30 * * * *", "skill": "desk-research" },
+  { "name": "project-scan", "cron": "0 22 * * 6", "skill": "project-scan" }
 ]

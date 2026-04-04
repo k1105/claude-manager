@@ -47,5 +47,5 @@ user-invocable: true
 ## 注意
 
 - 「わからない」「未定」も情報。無理に埋めない
-- 作成後、`plans/goals.md` にも追加する
+- 作成後、`projects/deadlines.md` にデッドラインがあれば追加する
 - Obsidianのwikilink（`[[]]`形式）を積極的に使う

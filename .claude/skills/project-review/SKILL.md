@@ -12,7 +12,7 @@ user-invocable: true
 
 1. **プロジェクトファイルを読む**
    - `projects/[project-name].md` を読み込む
-   - `plans/goals.md` での位置付けを確認
+   - `projects/deadlines.md` での位置付け・デッドラインを確認
 
 2. **情報の鮮度チェック**
    - 「現状」は最新か？
