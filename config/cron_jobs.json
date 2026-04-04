@@ -1,5 +1,4 @@
 [
-  { "name": "health-check", "cron": "*/30 0-14,23 * * *", "skill": "health-check" },
   { "name": "daily-briefing", "cron": "28 23 * * 1-6", "skill": "briefing" },
   { "name": "weekly-review", "cron": "28 23 * * 0", "skill": "weekly-review" },
   { "name": "end-of-day", "cron": "57 12 * * *", "skill": "end-of-day" },

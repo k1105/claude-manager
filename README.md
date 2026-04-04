@@ -106,7 +106,6 @@ claude-manager/
 | `/weekly-review`     | 週次レビュー                     | OK           |
 | `self-action-check`  | Claude自身のTODOチェック（自動） | -            |
 | `news-share`         | ニュース共有（自動）             | -            |
-| `cross-pollination`  | 異業種インスピレーション（自動） | -            |
 
 ## 定期実行
 

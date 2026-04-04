@@ -8,13 +8,7 @@ user-invocable: true
 
 プロジェクト配下のリサーチや_shared_researchのRQに基づいて、自律的に情報収集し、ドキュメントに追記する。
 
-## デスクリサーチ or クロスポリネーションの切り替え
-
-毎時の実行時、`date +%s` の末尾1桁で判定する：
-- **偶数** → 通常のデスクリサーチ（以下の手順）
-- **奇数** → クロスポリネーション（`.claude/skills/cross-pollination/SKILL.md` の手順に従う）
-
-## 手順（デスクリサーチ）
+## 手順
 
 1. `projects/_shared_research/_questions.md` を読み、活動中のRQ一覧を確認
 2. 各RQドキュメント（`projects/_shared_research/` および `projects/*/research/`）を読み、「未解決の問い」「調査すべきテーマ」を確認
