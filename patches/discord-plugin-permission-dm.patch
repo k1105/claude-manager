@@ -1,13 +1,15 @@
---- a/external_plugins/discord/server.ts
-+++ b/external_plugins/discord/server.ts
-@@ -484,7 +484,9 @@
-     const { request_id, tool_name, description, input_preview } = params
-     pendingPermissions.set(request_id, { tool_name, description, input_preview })
-     const access = loadAccess()
--    const text = `🔐 Permission: ${tool_name}`
-+    // Show tool name + description so the user knows what they're approving
-+    const preview = input_preview.length > 200 ? input_preview.slice(0, 200) + '…' : input_preview
-+    const text = `🔐 **${tool_name}**\n${description}\n\`\`\`\n${preview}\n\`\`\``
-     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-       new ButtonBuilder()
-         .setCustomId(`perm:more:${request_id}`)
+# Discord Plugin: Permission DM Preview
+#
+# 承認DMにtool_nameだけでなくdescription + input_previewを表示する。
+# 対象: discord plugin (claude-plugins-official) v0.0.4
+# ファイル: ~/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/discord/server.ts
+#
+# 適用確認: grep -q 'const preview = input_preview.length > 200' <file>
+# 未適用なら以下の置換を行う:
+
+FIND:
+    const text = `🔐 Permission: ${tool_name}`
+
+REPLACE:
+    const preview = input_preview.length > 200 ? input_preview.slice(0, 200) + '…' : input_preview
+    const text = `🔐 **${tool_name}**\n${description}\n\`\`\`\n${preview}\n\`\`\``
