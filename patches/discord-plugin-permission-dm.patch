@@ -1,0 +1,13 @@
+--- /Users/htk/.claude/plugins/cache/claude-plugins-official/discord/0.0.4/server.ts	2026-04-05 15:48:04
++++ /Users/htk/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/discord/server.ts	2026-04-06 14:47:25
+@@ -484,7 +484,9 @@
+     const { request_id, tool_name, description, input_preview } = params
+     pendingPermissions.set(request_id, { tool_name, description, input_preview })
+     const access = loadAccess()
+-    const text = `🔐 Permission: ${tool_name}`
++    // Show tool name + description so the user knows what they're approving
++    const preview = input_preview.length > 200 ? input_preview.slice(0, 200) + '…' : input_preview
++    const text = `🔐 **${tool_name}**\n${description}\n\`\`\`\n${preview}\n\`\`\``
+     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+       new ButtonBuilder()
+         .setCustomId(`perm:more:${request_id}`)
