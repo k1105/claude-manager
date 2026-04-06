@@ -11,5 +11,6 @@
   { "name": "checkin", "cron": "0 1,3,5,7,9,11,13 * * 1-6", "skill": "checkin" },
   { "name": "evening-planning", "cron": "30 8 * * 1-6", "skill": "checkin" },
   { "name": "desk-research", "cron": "30 * * * *", "skill": "desk-research" },
-  { "name": "project-scan", "cron": "0 22 * * 6", "skill": "project-scan" }
+  { "name": "project-scan", "cron": "0 22 * * 6", "skill": "project-scan" },
+  { "name": "wiki-lint", "cron": "30 22 * * 6", "skill": "wiki-lint" }
 ]
