@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "line": {
+      "command": "bun",
+      "args": [
+        "run",
+        "--cwd",
+        "projects/line-channel/server",
+        "--silent",
+        "start"
+      ]
+    }
+  }
+}

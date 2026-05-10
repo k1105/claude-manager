@@ -1,0 +1,7 @@
+name = "sentry-discord-relay"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Secrets (set via `wrangler secret put`):
+#   DISCORD_WEBHOOK_MIRACLE
+#   DISCORD_WEBHOOK_ROYAL
