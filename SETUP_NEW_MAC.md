@@ -118,19 +118,15 @@ launchctl kickstart -k gui/$(id -u)/com.hata.say-menubar
 
 ### tmux personas（4ペルソナを2x2に並べる）
 
-`~/.claude/bin/tmux-claude-{up,open,attach,down,status,swap,reopen}` が一式。`bin/` 自体は rsync で揃う。ただし前提が複数ある。
+`tmux-claude-{up,open,attach,down,status,swap,reopen}` は **utsushi リポジトリに同梱**されており、 `utsushi/install.sh` を走らせると `~/.claude/bin/` にコピーされる。`personas/active.json` も utsushi 側からテンプレで配置される。
 
 **前提:**
 
-- `tmux` がインストール済み（`brew install tmux`）
-- `jq` がインストール済み（active.json を読む）
-- `claude` バイナリが PATH 上にある — `~/.local/bin/claude` / `/opt/homebrew/bin/claude` / `/usr/local/bin/claude` のどれかに居ること
-- `~/.claude/personas/active.json` が存在（rsync 済みなら OK）
-- `~/dev/effigy/` を clone（persona 設定の正本がここ）
-  ```sh
-  git clone <effigy の repo URL> ~/dev/effigy
-  ```
-- `/Applications/Ghostty.app` がインストール済み（`tmux-claude-open` 用、無ければ手動 attach）
+- utsushi の `install.sh` を実行済み（tmux-claude スクリプト一式が `~/.claude/bin/` に入る）
+- `tmux` / `jq` インストール済み（`brew install tmux jq`）
+- `claude` バイナリが PATH 上（`~/.local/bin/claude` / `/opt/homebrew/bin/claude` / `/usr/local/bin/claude` のいずれか）
+- `~/dev/effigy/` を clone（persona 設定の正本）
+- `/Applications/Ghostty.app`（`tmux-claude-open` 用、無ければ手動 attach）
 
 **起動:**
 
