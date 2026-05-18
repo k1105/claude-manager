@@ -33,6 +33,10 @@
 - `projects/` — プロジェクト単位（README.md=定義、status.md=現在地、research/=調査、drafts/=叩き台、topics/=サブテーマ）
 - `projects/_shared_research/` — 横断リサーチ（RQ、クロスポリネーション）
 - `projects/_archive/` — 完了したプロジェクト
+- `wiki/` — LLM Wiki（Karpathyパターン）。スキーマは [[wiki/SCHEMA.md]] を参照
+  - `wiki/index.md` — 全ページ目次、`wiki/log.md` — 操作ログ
+  - `wiki/entities/` `wiki/concepts/` `wiki/sources/` `wiki/synthesis/`
+- `raw/` — wikiの生ソース（イミュータブル）。articles/ notes/ sessions/
 - `logs/` — daily/ weekly/ system/ screen/
 - `docs/` — profile, system, principles, criteria_archive
 - `config/` — cron_jobs.json, daily_triggers.json
@@ -41,7 +45,7 @@
 **定期スキル（外部スケジューラー経由）：**
 - briefing（毎朝）、checkin（2-3h）、end-of-day、weekly-review
 - desk-research/cross-pollination（毎時）、news-share（1日3回）
-- project-scan（週1）、self-action-check（毎時）
+- project-scan（週1）、wiki-lint（週1）、self-action-check（毎時）
 - meeting-debrief（会議後）、autonomous-prep（デッドライン駆動）
 
 **設計思想：** 記録駆動型。会話で決まったことは即座にファイルに書く（→ `.claude/rules/realtime-record.md`）。プロジェクトの穴はstatus.mdで構造的に可視化し、自律実行できるものはClaudeが進める。

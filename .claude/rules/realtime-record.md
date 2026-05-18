@@ -28,3 +28,43 @@
 
 - 「あとでまとめて書く」「end-of-dayで反映する」は禁止
 - 会話の中で出た具体的な数字・日付・人名・方針は、記憶に頼らずファイルに書く
+
+## wikilink を必ず張る（Obsidianグラフ駆動）
+
+ファイルを書くとき、関連する他ファイル・プロジェクトには **`[[wikilink]]` 形式**で参照を入れる。プレーンなパス文字列（`projects/xxx/status.md`）だけだと Obsidian のグラフ・バックリンクに乗らない。
+
+### 必須シーン
+
+- **logs/daily/YYYY-MM-DD.md** を書くとき：その日触れた全プロジェクトに `[[projects/xxx/status]]` をファイル冒頭の「関連:」行で張る
+- **projects/{A}/** から **projects/{B}/** に影響がある時：両方向で `[[projects/{B}/status]]` 等を張る（cross-link）
+- **research/** や **drafts/** から元プロジェクトの status へリンクを張る
+- **logs/daily 内で使う日付参照**は `[[2026-05-01]]` 形式で（裸の文字列にしない）
+- **wiki/** 系（concepts / entities / sources / synthesis）は SCHEMA に従う
+
+### 書き方の例
+
+```markdown
+---
+tags:
+  - log
+  - log/daily
+---
+
+# 2026-05-06
+
+関連: [[projects/money-plan/status]] / [[projects/polymarket-bot/status]] / [[projects/trading-bot/status]]
+
+## kado MVP-0 ローカル起動
+...
+```
+
+### NG パターン
+
+- ❌ `詳細は projects/trading-bot/status.md の「次に再開〜」` （プレーンパス、リンクされない）
+- ✅ `詳細は [[projects/trading-bot/status]] の「次に再開〜」`
+
+### 効果
+
+- グラフビューで projects 間の関係性が可視化される
+- バックリンクで「このプロジェクトに触れた日付」を即座に追える
+- 検索だけに頼らず構造でナビゲートできる

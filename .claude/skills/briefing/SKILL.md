@@ -24,6 +24,7 @@ user-invocable: true
    - 時間配分と合わせて「今日やっておいた方がいい」をサジェスト
 6. **各打ち合わせについて、事前準備・宿題があるかヒアリング**
 7. task-reportチャンネルの直近メッセージも確認し、報告済みの完了タスクを反映する
+8. **`wiki/synthesis/` を `status: dream-draft` で grep し、未判断の dream があれば1つだけ提示する** — 「昨夜の dream: {タイトル} — keep / discard?」。複数あれば最も新しい1件のみ。即決を求めず、興味があれば後で `/dreams keep <slug>` か `/dreams discard <slug>` と案内
 
 ## フロー
 
