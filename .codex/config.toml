@@ -1,0 +1,9 @@
+[mcp_servers.line]
+args = [
+    "run",
+    "--cwd",
+    "projects/line-channel/server",
+    "--silent",
+    "start",
+]
+command = "bun"

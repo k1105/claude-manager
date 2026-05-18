@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/check-setup-state.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/check-setup-state.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

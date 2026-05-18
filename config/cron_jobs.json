@@ -15,5 +15,6 @@
   { "name": "wiki-lint", "cron": "30 22 * * 6", "skill": "wiki-lint" },
   { "name": "dreams", "cron": "0 17 * * *", "skill": "dreams" },
   { "name": "github-trending", "cron": "30 0 * * *", "skill": "github-trending" },
-  { "name": "work-tracker-sync", "cron": "0 14 * * *", "skill": "work-tracker-sync" }
+  { "name": "work-tracker-sync", "cron": "0 14 * * *", "skill": "work-tracker-sync" },
+  { "name": "routing-shadow-summary", "cron": "1 14 * * *", "skill": "routing-shadow-summary" }
 ]
