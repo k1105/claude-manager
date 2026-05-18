@@ -116,11 +116,32 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.hata.say-menubar.pli
 launchctl kickstart -k gui/$(id -u)/com.hata.say-menubar
 ```
 
-### tmux personas
+### tmux personas（4ペルソナを2x2に並べる）
+
+`~/.claude/bin/tmux-claude-{up,open,attach,down,status,swap,reopen}` が一式。`bin/` 自体は rsync で揃う。ただし前提が複数ある。
+
+**前提:**
+
+- `tmux` がインストール済み（`brew install tmux`）
+- `jq` がインストール済み（active.json を読む）
+- `claude` バイナリが PATH 上にある — `~/.local/bin/claude` / `/opt/homebrew/bin/claude` / `/usr/local/bin/claude` のどれかに居ること
+- `~/.claude/personas/active.json` が存在（rsync 済みなら OK）
+- `~/dev/effigy/` を clone（persona 設定の正本がここ）
+  ```sh
+  git clone <effigy の repo URL> ~/dev/effigy
+  ```
+- `/Applications/Ghostty.app` がインストール済み（`tmux-claude-open` 用、無ければ手動 attach）
+
+**起動:**
 
 ```sh
-~/.claude/bin/tmux-claude-up
+~/.claude/bin/tmux-claude-up      # session "claude" を 2x2 で立てる（冪等）
+~/.claude/bin/tmux-claude-open    # Ghostty で開いて初期プロンプトまで投げる
+~/.claude/bin/tmux-claude-status  # 状態確認
 ```
+
+**ペルソナ:** indigo（秘書ゆりか）/ sakura（UX部門）/ mint（音声認識部門）/ lemon（モバイル部門）。
+切り替えは `tmux-claude-swap`、停止は `tmux-claude-down`。
 
 ## utsushi / avatar-frontend など外部 repo
 
